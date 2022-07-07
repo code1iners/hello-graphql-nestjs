@@ -8,36 +8,53 @@ input CreateUserInput {
   username: String!
 }
 
+type CreateUserOutput {
+  error: String
+  ok: Boolean!
+  user: UserOutput
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
 
 type Mutation {
-  createUser(input: CreateUserInput!): UserEntity!
-  updateUser(input: UpdateUserInput!): UserEntity!
+  createUser(input: CreateUserInput!): CreateUserOutput!
+  updateUser(input: UpdateUserInput!): UpdateUserOutput!
 }
 
 type Query {
-  getUsers: [UserEntity!]!
+  getUsers: UserResponse!
 }
 
 input UpdateUserInput {
   createdAt: DateTime
   email: String
-  id: Int
+  id: ID
   isVerified: Boolean
   password: String
   updatedAt: DateTime
   username: String
 }
 
-type UserEntity {
+type UpdateUserOutput {
+  error: String
+  ok: Boolean!
+  user: UserOutput
+}
+
+type UserOutput {
   createdAt: DateTime!
   email: String!
-  id: Int!
+  id: ID!
   isVerified: Boolean!
-  password: String!
   updatedAt: DateTime!
   username: String!
+}
+
+type UserResponse {
+  error: String
+  ok: Boolean!
+  users: [UserOutput!]
 }
